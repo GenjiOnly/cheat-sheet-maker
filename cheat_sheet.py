@@ -12,9 +12,9 @@ def get_content():
     values = list()
     with open('dic.txt') as fp:
         for line in fp.readlines():
-            if len(line) <= 5 :
+            if len(line) <= 5 or len(line)>=120:
                 pass
-            else :
+            else:
                 line = line.strip('\n').decode('utf-8')
                 match = re.compile('\s')
                 keys.append(match.split(line)[0])
@@ -34,8 +34,11 @@ def draw(width, height, words):
     # 加载字体
     path = 'C:/windows/fonts/Arial.ttf'
     path.decode('utf-8').encode('utf-8')
+
+    # 快捷键字体
     font = ImageFont.truetype(path, 13)
 
+    # 说明字体
     font2 = ImageFont.truetype('msyh.ttf', 13)
 
     draw = ImageDraw.Draw(image)
@@ -46,16 +49,21 @@ def draw(width, height, words):
         n += 1
         width = wid
         height = 30 * n + 100
-        draw.text((width, 10 + height), word, font=font, fill='#DCD5C9')
-        draw.text((width + 130, 10 + height),
+        draw.text((width, height), word, font=font, fill='#DCD5C9')
+        draw.text((width + 130, height),
                   words[word], font=font2, fill='#DCD5C9')
 
-        if height > 800 :
+        # 对高度进行判断
+        if height > 800:
             wid = width + 600
             n = 0.5
 
-    #image.show()
-    image.save('1.jpg','jpeg')
+    # image.show()
+    image.save('2.jpg', 'jpeg')
+
+
+def main():
+    draw(1920, 1080, get_content())
 
 if __name__ == '__main__':
-    draw(1920, 1080, get_content())
+    main()
